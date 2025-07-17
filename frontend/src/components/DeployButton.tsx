@@ -20,10 +20,10 @@ export default function DeployButton() {
 
   return (
     <button
-      className="mt-4 w-full bg-blue-600 text-white py-2"
+      className="mt-8 w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
       onClick={handleDeploy}
     >
-      DEPLOY
+      Deploy to Production
     </button>
   );
 }

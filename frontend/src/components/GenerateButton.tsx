@@ -23,10 +23,10 @@ export default function GenerateButton() {
 
   return (
     <button
-      className="mt-4 w-full bg-blue-600 text-white py-2"
+      className="mt-8 w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
       onClick={handleClick}
     >
-      GENERUJ NA DZIŚ
+      Generate Slides for Today
     </button>
   );
 }

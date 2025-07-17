@@ -5,50 +5,50 @@ import JobProgress from './components/JobProgress';
 import SlidePreviewGrid from './components/SlidePreviewGrid';
 import DeployButton from './components/DeployButton';
 import PlayerWindow from './player/PlayerWindow';
+import Header from './components/Header';
 
 function App() {
   const { jobStatus, finalVideoUrl } = useStore();
 
-  if (jobStatus === 'pending') {
-    return (
-      <div className="p-4 max-w-md mx-auto">
-        <h1 className="text-xl mb-4">Konfiguracja slajdów</h1>
-        <SlideConfigList />
-        <GenerateButton />
-      </div>
-    );
-  }
-
-  if (jobStatus === 'rendering') {
-    return (
-      <div className="p-4 text-center">
-        <JobProgress target="ready" />
-      </div>
-    );
-  }
-
-  if (jobStatus === 'ready') {
-    return (
-      <div className="p-4">
-        <SlidePreviewGrid />
-        <DeployButton />
-      </div>
-    );
-  }
-
-  if (jobStatus === 'building') {
-    return (
-      <div className="p-4 text-center">
-        <JobProgress target="complete" />
-      </div>
-    );
-  }
-
-  if (jobStatus === 'complete' && finalVideoUrl) {
-    return <PlayerWindow mp4Url={finalVideoUrl} />;
-  }
-
-  return <p>Błąd lub nieznany status</p>;
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow container mx-auto px-4 py-8">
+        {jobStatus === 'pending' && (
+          <div className="max-w-md mx-auto">
+            <h2 className="text-2xl font-bold mb-4">Slide Configuration</h2>
+            <SlideConfigList />
+            <GenerateButton />
+          </div>
+        )}
+        {jobStatus === 'rendering' && (
+          <div className="text-center">
+            <JobProgress target="ready" />
+          </div>
+        )}
+        {jobStatus === 'ready' && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Preview & Deploy</h2>
+            <SlidePreviewGrid />
+            <DeployButton />
+          </div>
+        )}
+        {jobStatus === 'building' && (
+          <div className="text-center">
+            <JobProgress target="complete" />
+          </div>
+        )}
+        {jobStatus === 'complete' && finalVideoUrl && (
+          <PlayerWindow mp4Url={finalVideoUrl} />
+        )}
+        {jobStatus !== 'pending' &&
+          jobStatus !== 'rendering' &&
+          jobStatus !== 'ready' &&
+          jobStatus !== 'building' &&
+          jobStatus !== 'complete' && <p>Error or unknown status</p>}
+      </main>
+    </div>
+  );
 }
 
 export default App;
