@@ -1,6 +1,5 @@
 import { generateSlides } from '../api/client';
 import { useStore } from '../state/useStore';
-import dayjs from 'dayjs';
 
 export default function GenerateButton() {
   const { configSlides, setJob } = useStore();
@@ -8,7 +7,7 @@ export default function GenerateButton() {
   const handleClick = async () => {
     try {
       const payload = {
-        date: dayjs().format('YYYY-MM-DD'),
+        date: new Date().toISOString().slice(0, 10),
         resolution: '1080x1920',
         slides: configSlides,
         lang: 'pl',
