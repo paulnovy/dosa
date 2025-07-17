@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dosa Player</title>
+</head>
+<body class="m-0 p-0">
+  <div id="root"></div>
+  <script type="module">
+    const params = new URLSearchParams(location.search);
+    const url = params.get('url');
+    if (url) {
+      const video = document.createElement('video');
+      video.src = url;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.style.width = '100vw';
+      video.style.height = '100vh';
+      document.body.appendChild(video);
+    } else {
+      document.body.textContent = 'Brak URL';
+    }
+  </script>
+</body>
+</html>
