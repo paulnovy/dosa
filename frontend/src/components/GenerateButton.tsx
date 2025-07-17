@@ -13,7 +13,11 @@ export default function GenerateButton() {
         slides: configSlides,
         lang: 'pl',
       } as const;
-      const res = await generateSlides(payload);
+      const headers =
+        import.meta.env.VITE_MOCK === '1'
+          ? { headers: { 'x-dosa-mode': 'stub' } }
+          : undefined;
+      const res = await generateSlides(payload, headers);
       setJob(res.job_id, res.status);
     } catch (err) {
       console.error(err);

@@ -8,7 +8,10 @@ export default function DeployButton() {
     if (!jobId) return;
     const slides = configSlides
       .filter((s) => s.enabled)
-      .map((s, i) => generatedSlides[i]);
+      .map((cfg) =>
+        generatedSlides.find((g) => g.type === cfg.type),
+      )
+      .filter(Boolean) as typeof generatedSlides;
     try {
       const res = await buildJob(jobId, slides);
       setJob(res.job_id, res.status);

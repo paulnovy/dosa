@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "vitest"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -22,6 +23,7 @@
     "@vitejs/plugin-react": "^4.0.3",
     "tailwindcss": "^3.4.4",
     "postcss": "^8.4.30",
-    "autoprefixer": "^10.4.16"
+    "autoprefixer": "^10.4.16",
+    "vitest": "^0.34.6"
   }
 }
