@@ -6,9 +6,13 @@ const STATUS_PATH = import.meta.env.VITE_N8N_STATUS_PATH ?? '/webhook/signage-st
 const BUILD_PATH = import.meta.env.VITE_N8N_BUILD_PATH ?? '/webhook/signage-build';
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const { headers, ...rest } = options;
   const res = await fetch(`${BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(headers ?? {}),
+    },
+    ...rest,
   });
   if (!res.ok) {
     throw new Error(await res.text());
@@ -16,15 +20,19 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export function generateSlides(payload: GenerateRequest): Promise<JobStatusResponse> {
+export function generateSlides(
+  payload: GenerateRequest,
+  options: RequestInit = {},
+): Promise<JobStatusResponse> {
   return request<JobStatusResponse>(GENERATE_PATH, {
     method: 'POST',
     body: JSON.stringify(payload),
+    ...options,
   });
 }
 
 export function getJobStatus(jobId: string): Promise<JobStatusResponse> {
-  const url = `${STATUS_PATH}?id=${encodeURIComponent(jobId)}`;
+  const url = `${STATUS_PATH}?job_id=${encodeURIComponent(jobId)}`;
   return request<JobStatusResponse>(url);
 }
 
